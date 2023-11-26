@@ -3,7 +3,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 import { buttonText } from "../utils/constants";
@@ -25,8 +25,8 @@ const PopupSlider = ( { onClose, images }: Props ) => {
         onSwipedRight: () => handlePrevClick(),
     });
 
-    const handleOverflowClick = (event) => {
-        if (event.target.id === overflowId) {
+    const handleOverflowClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        if ((event.target as HTMLDivElement).id === overflowId) {
             onClose();
         }
     };

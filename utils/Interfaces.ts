@@ -9,9 +9,9 @@ export interface IData {
 }
 
 export interface IDataGrid {
-    virtualTours: IVirtualToursData["virtual_tours"]
-    stills: IImageData["stills"]
-    floorPlans: IImageData["floor_plans"]
+    virtualTours: IData["virtual_tours"]
+    stills: IData["stills"]
+    floorPlans: IData["floor_plans"]
     floorArchiveUrl: string
     stillsArchiveUrl: string
 }

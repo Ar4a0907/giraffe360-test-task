@@ -11,7 +11,7 @@ import PopupSlider from "../PopupSlider";
 
 interface Props {
     title: string
-    data: IVirtualToursData | IImageData
+    data: IVirtualToursData[] | IImageData[]
     archiveUrl?: string
     isVirtualTour?: boolean
     showCount?: boolean
@@ -21,11 +21,13 @@ const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUr
     const [showAlert, setShowAlert] = useState(false);
     const [showSlider, setShowSlider] = useState(false);
 
-    const imageUrl = data[0].thumbnail;
+    const imageUrl = isVirtualTour
+        ? (data as IVirtualToursData[])[0].thumbnail
+        : (data as IImageData[])[0].thumbnail;
 
     const handleButtonClick = async () => {
         if (isVirtualTour) {
-            const url = data[0].url;
+            const url = (data as IVirtualToursData[])[0].url;
             await navigator.clipboard.writeText(url);
             setShowAlert(true);
         } else {
@@ -52,7 +54,7 @@ const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUr
         <>
             <div className="group flex flex-col rounded-lg border border-gray-100 overflow-hidden shadow-lg hover:border-gray-200">
                 {isVirtualTour ? (
-                    <a target="_blank" href={data[0].url} className="relative w-full h-52 cursor-pointer">
+                    <a target="_blank" href={(data as IVirtualToursData[])[0].url} className="relative w-full h-52 cursor-pointer">
                         <Image
                             className="object-cover"
                             src={imageUrl}
@@ -94,7 +96,7 @@ const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUr
             )}
             {showSlider && (
                 <Portal>
-                    <PopupSlider onClose={handleSliderClose} images={data} />
+                    <PopupSlider onClose={handleSliderClose} images={(data as IImageData[])} />
                 </Portal>
             )}
         </>

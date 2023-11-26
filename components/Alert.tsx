@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { alertText } from "../utils/constants";
 
 interface Props {
-    onClose: () => {}
+    onClose: () => void
 }
 
 const Alert = ({ onClose }: Props) => {
