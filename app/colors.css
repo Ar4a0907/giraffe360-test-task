@@ -1,0 +1,5 @@
+:root {
+    --giraffe-yelow: rgba(255, 198, 0, 1);
+    --giraffe-dark: rgba(26, 34, 46, 1);
+    --giraffe-dark-transperent: rgba(26, 34, 46, 0.3);
+}
