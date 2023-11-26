@@ -5,6 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 import React, { useState } from "react";
 import { useSwipeable } from "react-swipeable";
+import { saveAs } from "file-saver";
 
 import { buttonText } from "../utils/constants";
 import { IImageData } from "../utils/Interfaces";
@@ -39,11 +40,20 @@ const PopupSlider = ( { onClose, images }: Props ) => {
         setCurrentImageIndex(currentImageIndex === 0 ? length - 1 : currentImageIndex - 1);
     };
 
-    const saveFile = () => {
-        const currentImage = images[currentImageIndex];
-        // TODO: add download file
-        // eslint-disable-next-line
-        console.log(currentImage)
+    const saveFile = async () => {
+        try {
+            const response = await fetch(`/api/downloadImage?url=${images[currentImageIndex].original}`);
+
+            if (!response.ok) {
+                throw new Error("Failed to download image");
+            }
+
+            const blob = await response.blob();
+            saveAs(blob, "image.jpg");
+        } catch (error) {
+            // eslint-disable-next-line
+            console.error("Error downloading image:", error);
+        }
     };
 
     return (
@@ -91,7 +101,10 @@ const PopupSlider = ( { onClose, images }: Props ) => {
                         </div>
 
                     </div>
-                    <Button text={buttonText.download} onClick={saveFile} />
+                    <Button
+                        text={buttonText.download}
+                        onClick={saveFile}
+                    />
                 </div>
             </div>
 

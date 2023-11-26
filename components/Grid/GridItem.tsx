@@ -17,7 +17,7 @@ interface Props {
     showCount?: boolean
 }
 
-const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUrl }: Props) => {
+const GridItem = ({ title, showCount = false, data, isVirtualTour = false, archiveUrl, saveImage = () => {} }: Props) => {
     const [showAlert, setShowAlert] = useState(false);
     const [showSlider, setShowSlider] = useState(false);
 
@@ -48,6 +48,10 @@ const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUr
 
     const handleAlertClose = () => {
         setShowAlert(false);
+    };
+
+    const func = async () => {
+        await saveImage;
     };
 
     return (
@@ -96,7 +100,10 @@ const GridItem = ({ title, showCount=false, data, isVirtualTour=false, archiveUr
             )}
             {showSlider && (
                 <Portal>
-                    <PopupSlider onClose={handleSliderClose} images={(data as IImageData[])} />
+                    <PopupSlider
+                        onClose={handleSliderClose}
+                        images={(data as IImageData[])}
+                    />
                 </Portal>
             )}
         </>
